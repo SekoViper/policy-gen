@@ -1,7 +1,7 @@
-import React from 'react';
-import 'tailwindcss/tailwind.css';
-import policies from '@/data/policies';
-import Link from 'next/link';
+import React from "react";
+import "tailwindcss/tailwind.css";
+import policies from "@/data/policies";
+import Link from "next/link";
 
 const Policy = () => {
   return (
@@ -15,7 +15,10 @@ const Policy = () => {
             <div key={policy.id} className="bg-white shadow rounded-lg p-4">
               <h1 className="text-xl font-bold mb-2">{policy.fileName}</h1>
               <p className="text-gray-700 text-base mb-2">{policy.desc}</p>
-              <Link className="text-blue-500 border p-2 hover:underline" href={`${policy.titleQuery}`}>
+              <Link
+                className="text-blue-500 border p-2 hover:underline"
+                href={`${policy.titleQuery}`}
+              >
                 Generate Policy
               </Link>
             </div>
