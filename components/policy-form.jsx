@@ -13,7 +13,11 @@ function PolicyForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Perform form validation and other necessary logic
+    // Perform form validation
+    if (name.length <= 2) {
+      toast.error("Please enter a valid name.");
+      return;
+    }
 
     try {
       const response = await fetch(
@@ -41,25 +45,38 @@ function PolicyForm() {
 
       // Clean up the temporary URL object
       URL.revokeObjectURL(policyUrl);
-
-      // Update the policy generation status
-      setPolicyGenerated(true);
-     } catch (error) {
+    } catch (error) {
       console.error("Error generating the policy document", error);
       // Handle the error condition appropriately
     }
   };
 
+  const isNameValid = name.length > 2;
+  const buttonClassNames = `inline-block px-4 py-2 mt-4 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
+    isNameValid ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"
+  }`;
+
   return (
-    <form onSubmit={handleSubmit}>
-      <label>
-        Name:
-        <input type="text" value={name} onChange={handleNameChange} />
+    <form onSubmit={handleSubmit} className="mt-4 text-center">
+      <label className="block mb-2">
+        <input
+          type="text"
+          placeholder="Enter your company name"
+          value={name}
+          onChange={handleNameChange}
+          className="block mx-auto w-1/2 py-2 border-b border-gray-300 focus:border-blue-500 focus:ring-blue-500 focus:outline-none sm:text-sm"
+        />
       </label>
-      <button type="submit">Generate Policy Document</button>
+      <button
+        type="submit"
+        className={buttonClassNames}
+        disabled={!isNameValid}
+      >
+        Generate Policy Document
+      </button>
 
       {/* Toast container for displaying toast messages */}
-      <ToastContainer />
+      <ToastContainer className="mt-4" />
     </form>
   );
 }
