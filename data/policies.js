@@ -23,30 +23,30 @@ const policies = [
     titleQuery: "data-clarification-policy.hbs",
     desc: "This policy provides guidelines for responding to a data breach. It applies to all employees, contractors, and vendors who handle company data or respond to a data breach.",
   },
-    {
+  {
     id: "5",
     fileName: "Disaster Recovery/Business Continuity Plan",
     titleQuery: "disaster-recovery-policy.hbs",
     desc: "This policy provides guidelines for responding to a disaster or business disruption. It applies to all employees, contractors, and vendors who handle company data or respond to a disaster or business disruption.",
-    },
-    {
+  },
+  {
     id: "6",
     fileName: "Incident Response Plan",
     titleQuery: "incident-response-plan-policy.hbs",
     desc: "This policy provides guidelines for responding to a security incident. It applies to all employees, contractors, and vendors who handle company data or respond to a security incident.",
-    },
-    {
+  },
+  {
     id: "7",
     fileName: "Remote Work Policy",
     titleQuery: "remote-work-policy.hbs",
     desc: "This policy provides guidelines for working remotely. It applies to all employees, contractors, and vendors who work remotely.",
-    },
-    {
+  },
+  {
     id: "8",
     fileName: "Vendor Security Policy",
     titleQuery: "vendor-security-policy.hbs",
     desc: "This policy provides guidelines for working with vendors. It applies to all employees, contractors, and vendors who work with vendors.",
-    },
+  },
 ];
 
 export default policies;
