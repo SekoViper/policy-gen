@@ -45,6 +45,8 @@ function PolicyForm() {
 
       // Clean up the temporary URL object
       URL.revokeObjectURL(policyUrl);
+      // Clear the input field
+      setName("");
     } catch (error) {
       console.error("Error generating the policy document", error);
       // Handle the error condition appropriately
@@ -53,7 +55,9 @@ function PolicyForm() {
 
   const isNameValid = name.length > 2;
   const buttonClassNames = `inline-block px-4 py-2 mt-4 text-white rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 ${
-    isNameValid ? "bg-blue-500 hover:bg-blue-600" : "bg-gray-400 cursor-not-allowed"
+    isNameValid
+      ? "bg-blue-500 hover:bg-blue-600"
+      : "bg-gray-400 cursor-not-allowed"
   }`;
 
   return (
