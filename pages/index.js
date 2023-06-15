@@ -1,11 +1,12 @@
 import React from 'react'
-import PolicyForm from '..//components/policy-form'
+import Policy from '../components/policy'
+import policies from '../data/policies'
 
 const HomePage = () => {
+  const policy = policies[0]; 
   return (
     <div>
-      <h1>Policy Generation</h1>
-      <PolicyForm />
+      <Policy policy={policy} />
     </div>
   );
 };
