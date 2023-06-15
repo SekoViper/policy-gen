@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+import { useRouter } from "next/router";
 
 function PolicyForm() {
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
+  const [name, setName] = useState("");
+  const router = useRouter();
 
   const handleNameChange = (e) => {
     setName(e.target.value);
-  };
-
-  const handleEmailChange = (e) => {
-    setEmail(e.target.value);
   };
 
   const handleSubmit = async (e) => {
@@ -17,31 +16,36 @@ function PolicyForm() {
     // Perform form validation and other necessary logic
 
     try {
-      const response = await fetch('/api/generatePolicyDocument', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ name, email }),
-      });
+      const response = await fetch(
+        `/api/generatePolicyDocument?templateName=${router.query.id}`, // Pass the template ID as a query parameter
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ name }),
+        }
+      );
 
-      const policyContent = await response.text();
+      const policyBlob = await response.blob();
+      const policyUrl = URL.createObjectURL(policyBlob);
 
-      // Create a downloadable file
-      const fileName = 'policy-document.txt';
-      const fileContent = new Blob([policyContent], { type: 'text/plain' });
-      const fileURL = URL.createObjectURL(fileContent);
+      // Display a toast message
+      toast.success(`${name} policy created successfully!`);
 
-      // Create a download link and trigger the download
-      const downloadLink = document.createElement('a');
-      downloadLink.href = fileURL;
-      downloadLink.download = fileName;
-      downloadLink.click();
+      // Create a temporary link element to trigger the download
+      const link = document.createElement("a");
+      link.href = policyUrl;
+      link.download = `${name}-policy.pdf`;
+      link.click();
 
-      // Clean up the URL object after the download
-      URL.revokeObjectURL(fileURL);
-    } catch (error) {
-      console.error('Error generating or downloading the policy document', error);
+      // Clean up the temporary URL object
+      URL.revokeObjectURL(policyUrl);
+
+      // Update the policy generation status
+      setPolicyGenerated(true);
+     } catch (error) {
+      console.error("Error generating the policy document", error);
       // Handle the error condition appropriately
     }
   };
@@ -52,11 +56,10 @@ function PolicyForm() {
         Name:
         <input type="text" value={name} onChange={handleNameChange} />
       </label>
-      <label>
-        Email:
-        <input type="email" value={email} onChange={handleEmailChange} />
-      </label>
       <button type="submit">Generate Policy Document</button>
+
+      {/* Toast container for displaying toast messages */}
+      <ToastContainer />
     </form>
   );
 }
